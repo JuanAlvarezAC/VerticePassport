@@ -1,0 +1,183 @@
+/* =========================
+   SIGN IN — específico
+   (globals en styles.css)
+========================= */
+
+.container {
+  width: 100%;
+  max-width: 375px;
+  margin: auto;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.pink {
+  color: var(--primary);
+}
+
+.gold {
+  color: var(--gold);
+}
+
+h2 {
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.desc {
+  color: var(--subtext);
+  font-size: 14px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* =========================
+   INPUTS
+========================= */
+.input-group {
+  position: relative;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px 14px 14px 45px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input-group input:focus {
+  border-color: var(--primary);
+}
+
+.icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.forgot {
+  display: block;
+  text-align: right;
+  margin: -4px 0 16px;
+  font-size: 12px;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+/* =========================
+   BOTÓN PRINCIPAL
+========================= */
+.main-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.main-btn:hover {
+  opacity: 0.85;
+}
+
+/* =========================
+   DIVIDER
+========================= */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 22px 0;
+}
+
+.divider hr {
+  flex: 1;
+  border: none;
+  height: 1px;
+  background: var(--border);
+}
+
+.divider span {
+  margin: 0 12px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+/* =========================
+   BOTONES SOCIALES
+========================= */
+.social-btns {
+  position: relative;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.social-btns .social {
+  width: 100%;
+  padding: 14px 14px 14px 45px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: #f8f8f8;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.social-btns .social:hover {
+  background: #f0f0f0;
+}
+
+.social-btns .social-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+/* =========================
+   PIE
+========================= */
+.signup {
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.footer {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 16px;
+  text-align: center;
+  line-height: 1.5;
+}

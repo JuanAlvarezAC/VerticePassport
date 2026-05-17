@@ -1,0 +1,279 @@
+/* =========================
+   HOME / DASHBOARD — específico
+   (globals en styles.css)
+   Nota: .hero-card y .section-title están en styles.css
+========================= */
+
+/* ── Hero saludo (extiende .hero-card global) ── */
+.home-hero {
+  padding: 22px 20px 20px;
+}
+
+.home-hero-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.home-hero-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.home-hero-text p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.82;
+}
+
+.home-hero-text h2 {
+  margin: 2px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.home-hero-date {
+  font-size: 12px;
+  opacity: 0.75;
+  background: rgba(255, 255, 255, 0.15);
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ── Stats strip ── */
+.home-stats {
+  display: flex;
+  gap: 10px;
+  margin: 0 16px 6px;
+}
+
+.home-stat {
+  flex: 1;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  text-align: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.home-stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.home-stat-label {
+  font-size: 11px;
+  color: var(--subtext);
+  font-weight: 500;
+}
+
+/* ── Usa .section-title de styles.css ── */
+.home-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--subtext);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 18px 16px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-section-title a {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ── Próxima actividad ── */
+.card.home-next {
+  margin: 0 16px 6px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--primary);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.home-next-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  background: var(--primary-light);
+  border-radius: var(--radius-sm);
+  padding: 8px 6px;
+  flex-shrink: 0;
+}
+
+.home-next-date-day {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.home-next-date-month {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.home-next-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-next-info h4 {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-next-info p {
+  margin: 0 0 2px;
+  font-size: 12px;
+  color: var(--subtext);
+}
+
+.home-next-pts {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.home-no-next {
+  margin: 0 16px 6px;
+  padding: 18px 16px;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+  text-align: center;
+  color: var(--subtext);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ── Quick access grid ── */
+.home-quick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0 16px 6px;
+}
+
+.home-quick-card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.home-quick-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.home-quick-card:active {
+  transform: scale(0.97);
+}
+
+.home-quick-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.home-quick-card h4 {
+  margin: 0 0 2px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.home-quick-card p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--subtext);
+  line-height: 1.4;
+}
+
+/* ── Actividad destacada ── */
+.card.home-featured {
+  margin: 0 16px 6px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.home-featured-img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  display: block;
+}
+
+.home-featured-img-placeholder {
+  width: 100%;
+  height: 110px;
+  background: linear-gradient(135deg, var(--primary-light) 0%, #fce4ef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+
+.home-featured-body {
+  padding: 14px 16px 16px;
+}
+
+.home-featured-body h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.home-featured-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.home-featured-meta span {
+  font-size: 12px;
+  color: var(--subtext);
+}

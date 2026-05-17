@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+.app {
+  max-width: 375px;
+  margin: auto;
+  background: #f7f7f7;
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 70px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 15px;
+}
+
+.header h1 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.menu {
+  position: absolute;
+  left: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  margin: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.card h3 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+}
+
+.card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #555;
+  font-size: 13px;
+}
+
+.card li {
+  margin-bottom: 5px;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 375px;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  border-top: 1px solid #ddd;
+}
+
+.bottom-nav span {
+  font-size: 20px;
+  color: #444;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.bottom-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

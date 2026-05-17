@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+
+.app {
+    max-width: 400px;
+    margin: auto;
+    padding: 15px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    margin: 0;
+}
+
+.menu {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    overflow-x: auto;
+}
+
+.tab {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: #eee;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: #000;
+    color: white;
+}
+
+
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.points {
+    color: #d4a017;
+    font-weight: bold;
+}
+
+.date {
+    color: #777;
+    font-size: 14px;
+}
+
+/* Botones */
+.main-btn {
+    width: 100%;
+    padding: 10px;
+    background: #e91e63;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.main-btn:hover {
+  opacity: 0.8;
+}
+
+
+.completed {
+    width: 100%;
+    padding: 10px;
+    background: #ccc;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* Bottom nav */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    background: white;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Para que los iconos se alineen bien */
+.bottom-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

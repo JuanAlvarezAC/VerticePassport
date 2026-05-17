@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #efefef;
+}
+
+/* Contenedor tipo app */
+.app {
+  max-width: 400px;
+  margin: auto;
+  background: #efefef;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.back, .icon {
+  font-size: 18px;
+  color: #333;
+}
+
+/* Perfil */
+.profile-section {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  gap: 12px;
+}
+
+.avatar {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-card {
+  flex: 1;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.profile-card h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.profile-card p {
+  margin: 3px 0;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  gap: 10px;
+  padding: 0 15px;
+  margin-bottom: 15px;
+}
+
+.card {
+  flex: 1;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.card p {
+  margin: 5px 0 0;
+  font-size: 13px;
+}
+
+.small {
+  font-size: 13px;
+  color: #777;
+}
+
+/* Progreso */
+.progress {
+  padding: 20px 15px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+/* Botones */
+.btn {
+  width: calc(100% - 30px);
+  margin: 10px 15px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.7;
+}
+
+
+.primary {
+  background: #e6005c;
+  color: white;
+}
+
+.large {
+  margin-top: 20px;
+  padding: 16px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

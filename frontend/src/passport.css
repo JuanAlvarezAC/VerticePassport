@@ -1,0 +1,122 @@
+/* =========================
+   PASSPORT — específico
+   (globals en styles.css)
+========================= */
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.card.passport p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: var(--subtext);
+}
+
+/* =========================
+   PROGRESO (Donut)
+========================= */
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.donut {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(var(--primary) 73%, #eee 0%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.donut-inner {
+  width: 85px;
+  height: 85px;
+  background: var(--card-bg);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.donut-inner span {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.donut-inner p {
+  font-size: 11px;
+  color: var(--subtext);
+  margin: 0;
+}
+
+.progress-info p {
+  font-size: 13px;
+  margin: 6px 0;
+}
+
+.progress-info .total {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+/* ── Leyenda dots ── */
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.dot.completadas { background: var(--primary); }
+.dot.progress    { background: #f8a5c2; }
+.dot.pending     { background: #ccc; }
+
+/* =========================
+   BARRAS DE REQUISITOS
+========================= */
+.progress-bars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.progress-bars div p {
+  font-size: 12px;
+  margin: 0 0 2px;
+  color: var(--subtext);
+}
+
+.progress-bars span {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.bar {
+  width: 100%;
+  height: 6px;
+  background: #eee;
+  border-radius: 10px;
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.bar div {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 10px;
+}
