@@ -1,4 +1,3 @@
-// Importar Express y el controlador
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/actividad.controller');
@@ -9,6 +8,57 @@ const controller = require('../controllers/actividad.controller');
  *   name: Actividad
  *   description: API para gestionar actividades
  */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Actividad:
+ *       type: object
+ *       required:
+ *         - nombre_act
+ *         - id_tipo
+ *         - id_semestre
+ *         - id_rol_organizador
+ *         - fecha
+ *         - hora_inicio
+ *         - hora_fin
+ *         - lugar
+ *       properties:
+ *         nombre_act:
+ *           type: string
+ *         id_tipo:
+ *           type: integer
+ *         id_semestre:
+ *           type: integer
+ *         id_rol_organizador:
+ *           type: integer
+ *         fecha:
+ *           type: string
+ *           format: date
+ *         hora_inicio:
+ *           type: string
+ *         hora_fin:
+ *           type: string
+ *         cupo_max:
+ *           type: integer
+ *         lugar:
+ *           type: string
+ *         descripcion:
+ *           type: string
+ *       example:
+ *         nombre_act: "Prueba actividad"
+ *         id_tipo: 2
+ *         id_semestre: 9
+ *         id_rol_organizador: 2
+ *         fecha: "2026-08-28"
+ *         hora_inicio: "17:00:00"
+ *         hora_fin: "19:00:00"
+ *         cupo_max: 50
+ *         lugar: "Salón 101"
+ *         descripcion: "Descripción de prueba"
+ */
+
 /**
  * @swagger
  * /api/actividad:
@@ -22,78 +72,6 @@ const controller = require('../controllers/actividad.controller');
  *         description: Error del servidor
  */
 router.get('/actividad', controller.getAll);
-/**
- * @swagger
- * components:
- *  schemas:
- *    Actividad:
- *      type: object
- *      required:
- *        - nombre_act
- *        - id_tipo
- *        - id_semestre
- *        - id_rol_organizador
- *        - fecha
- *        - hora_inicio
- *        - hora_fin
- *        - lugar
- *      properties:
- *        nombre_act:
- *          type: string
- *        id_tipo:
- *          type: integer
- *        id_semestre:
- *          type: integer
- *        id_rol_organizador:
- *          type: integer
- *        fecha:
- *          type: string
- *          format: date
- *        hora_inicio:
- *          type: string
- *        hora_fin:
- *          type: string
- *        cupo_max:
- *          type: integer
- *        lugar:
- *          type: string
- *        descripcion:
- *          type: string
- *      example:
- *        nombre_act: "Prueba actividad"
- *        id_tipo: 2
- *        id_semestre: 9
- *        id_rol_organizador: 2
- *        fecha: "2026-08-28"
- *        hora_inicio: "17:00:00"
- *        hora_fin: "19:00:00"
- *        cupo_max: 50
- *        lugar: "Salón 101"
- *        descripcion: "Descripción de prueba"
- */
-
-
-/**
- * @swagger
- * /api/actividad/{id}:
- *   get:
- *     summary: Obtener una actividad por ID
- *     tags: [Actividad]
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Actividad encontrada
- *       404:
- *         description: No encontrada
- *       500:
- *         description: Error del servidor
- */
-router.get('/actividad/:id', controller.getById);
 
 /**
  * @swagger
@@ -116,6 +94,103 @@ router.get('/actividad/:id', controller.getById);
  *         description: Error del servidor
  */
 router.post('/actividad', controller.create);
+
+/**
+ * @swagger
+ * /api/actividad/calendario:
+ *   get:
+ *     summary: Obtener el calendario del semestre activo
+ *     tags: [Actividad]
+ *     responses:
+ *       200:
+ *         description: Lista de actividades del semestre activo
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/actividad/calendario', controller.getCalendarioActivo);
+
+/**
+ * @swagger
+ * /api/actividad/calendario/{nombre_semestre}:
+ *   get:
+ *     summary: Obtener el calendario de un semestre específico
+ *     tags: [Actividad]
+ *     parameters:
+ *       - name: nombre_semestre
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: "Ene-Jun 2026 (26-1)"
+ *     responses:
+ *       200:
+ *         description: Lista de actividades del semestre indicado
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/actividad/calendario/:nombre_semestre', controller.getCalendarioPorSemestre);
+
+/**
+ * @swagger
+ * /api/actividad/{id}/inscritos:
+ *   get:
+ *     summary: Obtener la lista de inscritos a una actividad
+ *     tags: [Actividad]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Lista de inscritos
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/actividad/:id/inscritos', controller.getInscritos);
+
+/**
+ * @swagger
+ * /api/actividad/{id}/puntos:
+ *   get:
+ *     summary: Obtener los puntos fijos de una actividad
+ *     tags: [Actividad]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Puntos de la actividad
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/actividad/:id/puntos', controller.getPuntosActividad);
+
+/**
+ * @swagger
+ * /api/actividad/{id}:
+ *   get:
+ *     summary: Obtener una actividad por ID
+ *     tags: [Actividad]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Actividad encontrada
+ *       404:
+ *         description: No encontrada
+ *       500:
+ *         description: Error del servidor
+ */
+router.get('/actividad/:id', controller.getById);
 
 /**
  * @swagger

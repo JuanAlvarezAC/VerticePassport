@@ -1,101 +1,96 @@
+const db = require('../config/db');
+const axios = require('axios');
 
-const bd = require('../config/db');
+const PEXELS_API_KEY = "2CShh991gVz4IdLJ3P6D3gibhKAWsrvquBZqygyz59zx54L1vLxq10Qo";
 
-// Obtener todas las actividades
-exports.getAll = (req, res) => {
-    bd.query("SELECT * FROM actividad", (error, results) => {
-        if (error) {
-            console.error(error);
-            return res.status(500).send("Error al obtener actividades");
-        }
+// Función para obtener imagen de Pexels usando el nombre de la actividad como keyword
+const getPexelsImage = async (nombre) => {
+    try {
+        const clean = nombre
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+
+        const query = encodeURIComponent(clean);
+
+        const res = await axios.get(
+            `https://api.pexels.com/v1/search?query=${query}&per_page=1`,
+            { headers: { Authorization: PEXELS_API_KEY } }
+        );
+
+        return res.data.photos[0]?.src.medium || null;
+
+    } catch (error) {
+        console.error("Error Pexels:", error.message);
+        return null;
+    }
+};
+
+// GET /api/actividad — Obtener todas las actividades
+exports.getAll = async (req, res) => {
+    try {
+        const [results] = await db.query(`
+            SELECT a.*, t.puntos_fijos
+            FROM actividad a
+            JOIN tipo_actividad t ON a.id_tipo = t.id_tipo
+        `);
         res.json(results);
-    });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al obtener actividades");
+    }
 };
 
-// Obtener una actividad por ID
-exports.getById = (req, res) => {
-    const id = req.params.id;
+// GET /api/actividad/:id — Obtener una actividad por ID (con imagen Pexels)
+exports.getById = async (req, res) => {
+    try {
+        const [results] = await db.query(
+            `SELECT * FROM vw_calendario_actividades WHERE id_actividad = ?`,
+            [req.params.id]
+        );
 
-    bd.query("SELECT * FROM actividad WHERE id_actividad = ?", [id], (error, results) => {
-        if (error) {
-            return res.status(500).send("Error");
-        }
+        if (results.length === 0) return res.status(404).send("No encontrada");
 
-        if (results.length === 0) {
-            return res.status(404).send("No encontrada");
-        }
+        const act = results[0];
+        const imagen = await getPexelsImage(act.nombre_evento);
 
-        res.json(results[0]);
-    });
+        res.json({ ...act, imagen });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error");
+    }
 };
 
-// Crear nueva actividad
-exports.create = (req, res) => {
+// POST /api/actividad — Crear nueva actividad
+exports.create = async (req, res) => {
     const {
-        nombre_act,
-        id_tipo,
-        id_semestre,
-        id_rol_organizador,
-        fecha,
-        hora_inicio,
-        hora_fin,
-        cupo_max,
-        lugar,
-        descripcion
+        nombre_act, id_tipo, id_semestre, id_rol_organizador,
+        fecha, hora_inicio, hora_fin, cupo_max, lugar, descripcion
     } = req.body;
 
-    // Validación básica
     if (!nombre_act || !id_tipo || !id_semestre || !id_rol_organizador || !fecha || !hora_inicio || !hora_fin || !lugar) {
         return res.status(400).json({ error: "Faltan campos obligatorios" });
     }
 
-    bd.query(
-        `INSERT INTO actividad 
-        (nombre_act, id_tipo, id_semestre, id_rol_organizador, fecha, hora_inicio, hora_fin, cupo_max, lugar, descripcion) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [nombre_act, id_tipo, id_semestre, id_rol_organizador, fecha, hora_inicio, hora_fin, cupo_max, lugar, descripcion],
-        (error) => {
-            if (error) {
-                console.error(error);
-                return res.status(500).send("Error al crear actividad");
-            }
-
-            res.status(201).send("Actividad creada");
-        }
-    );
+    try {
+        await db.query(
+            `INSERT INTO actividad 
+            (nombre_act, id_tipo, id_semestre, id_rol_organizador, fecha, hora_inicio, hora_fin, cupo_max, lugar, descripcion)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [nombre_act, id_tipo, id_semestre, id_rol_organizador, fecha, hora_inicio, hora_fin, cupo_max, lugar, descripcion]
+        );
+        res.status(201).send("Actividad creada");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al crear actividad");
+    }
 };
 
-// Eliminar una actividad por ID
-exports.remove = (req, res) => {    
-    const id = req.params.id;
-
-    bd.query(
-        "DELETE FROM actividad WHERE id_actividad = ?",
-        [id],
-        (error, result) => {
-            if (error) {
-                console.error(error);
-                return res.status(500).send("Error al eliminar");
-            }
-
-            if (result.affectedRows === 0) {
-                return res.status(404).send("Actividad no encontrada");
-            }
-
-            res.send("Actividad eliminada");
-        }
-    );
-};
-
-// Editar una actividad por ID
-exports.update = (req, res) => {
-    const id = req.params.id;
-
+// PUT /api/actividad/:id — Actualizar una actividad
+exports.update = async (req, res) => {
     const {
         nombre_act,
         id_tipo,
         id_semestre,
-        id_rol_organizador,
         fecha,
         hora_inicio,
         hora_fin,
@@ -104,43 +99,127 @@ exports.update = (req, res) => {
         descripcion
     } = req.body;
 
-    bd.query(
-        `UPDATE actividad SET 
-        nombre_act = ?, 
-        id_tipo = ?, 
-        id_semestre = ?, 
-        id_rol_organizador = ?, 
-        fecha = ?, 
-        hora_inicio = ?, 
-        hora_fin = ?, 
-        cupo_max = ?, 
-        lugar = ?, 
-        descripcion = ?
-        WHERE id_actividad = ?`,
-        [
-            nombre_act,
-            id_tipo,
-            id_semestre,
-            id_rol_organizador,
-            fecha,
-            hora_inicio,
-            hora_fin,
-            cupo_max,
-            lugar,
-            descripcion,
-            id
-        ],
-        (error, result) => {
-            if (error) {
-                console.error(error);
-                return res.status(500).send("Error al actualizar");
-            }
+    try {
+        const [result] = await db.query(
+            `UPDATE actividad SET
+            nombre_act = ?,
+            id_tipo = ?,
+            id_semestre = ?,
+            fecha = ?,
+            hora_inicio = ?,
+            hora_fin = ?,
+            cupo_max = ?,
+            lugar = ?,
+            descripcion = ?
+            WHERE id_actividad = ?`,
+            [
+                nombre_act,
+                id_tipo,
+                id_semestre,
+                fecha,
+                hora_inicio,
+                hora_fin,
+                cupo_max,
+                lugar,
+                descripcion,
+                req.params.id
+            ]
+        );
 
-            if (result.affectedRows === 0) {
-                return res.status(404).send("Actividad no encontrada");
-            }
-
-            res.send("Actividad actualizada");
+        if (result.affectedRows === 0) {
+            return res.status(404).send("Actividad no encontrada");
         }
-    );
+
+        res.json({ ok: true });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
+};
+
+// DELETE /api/actividad/:id — Eliminar una actividad
+exports.remove = async (req, res) => {
+    try {
+        const [result] = await db.query(
+            "DELETE FROM actividad WHERE id_actividad = ?",
+            [req.params.id]
+        );
+
+        if (result.affectedRows === 0) return res.status(404).send("Actividad no encontrada");
+        res.send("Actividad eliminada");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al eliminar");
+    }
+};
+
+// GET /api/actividad/calendario — Calendario del semestre activo
+exports.getCalendarioActivo = async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            `SELECT * FROM vw_calendario_actividades
+             WHERE nombre_semestre = (
+                 SELECT nombre_semestre FROM semestre WHERE activo = 1 LIMIT 1
+             )
+             ORDER BY fecha, hora_inicio`
+        );
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// GET /api/actividad/calendario/:nombre_semestre — Calendario de un semestre específico
+exports.getCalendarioPorSemestre = async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            `SELECT * FROM vw_calendario_actividades WHERE nombre_semestre = ?
+             ORDER BY fecha, hora_inicio`,
+            [req.params.nombre_semestre]
+        );
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// GET /api/actividad/:id/inscritos — Lista de inscritos a una actividad
+exports.getInscritos = async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            `SELECT a.id_actividad, act.nombre_act,
+                    u.matricula,
+                    CONCAT(u.nombre, ' ', u.apellidos) AS nombre_completo,
+                    a.asistio, a.puntos_otorgados, a.fecha_registro
+             FROM asistencia a
+             INNER JOIN usuario u ON a.matricula = u.matricula
+             INNER JOIN actividad act ON a.id_actividad = act.id_actividad
+             WHERE a.id_actividad = ?
+             ORDER BY nombre_completo`,
+            [req.params.id]
+        );
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// GET /api/actividad/:id/puntos — Puntos fijos de una actividad
+exports.getPuntosActividad = async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            `SELECT fn_puntos_actividad(?) AS puntos`,
+            [req.params.id]
+        );
+        res.json({ puntos: rows[0].puntos });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
 };
